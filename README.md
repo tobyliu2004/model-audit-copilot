@@ -1,129 +1,188 @@
+
 # Model Audit Copilot
 
-**Model Audit Copilot** is an open-source, modular toolkit designed to evaluate and monitor the integrity, fairness, and stability of machine learning pipelines. It provides a developer-first auditing suite to detect drift, explain predictions, audit fairness, validate schema consistency, and flag data leakage or pipeline anomalies—integrating seamlessly into existing ML workflows.
+Model Audit Copilot is a modular, production-grade ML auditing framework that evaluates and validates machine learning models and data pipelines. It provides drift detection, fairness audits, data leakage checks, schema validation, SHAP-based explainability, and even model version comparisons. All of this is available through a Streamlit dashboard, a CLI, or batch automation mode.
 
-This project is aimed at advancing responsible AI deployment by offering practical tools to surface hidden risks and ensure trustworthy model behavior, especially in production environments.
-
----
-
-## Features
-
-Model Audit Copilot includes the following core auditing capabilities:
-
-### 1. Drift Detection
-- Detect covariate drift between datasets (e.g., production vs training).
-- Statistical methods: KS test, Population Stability Index (PSI), Earth Mover’s Distance (EMD).
-- Visualizations of distributional change and feature-wise drift magnitudes.
-
-### 2. Fairness Auditing
-- Analyze group fairness metrics across protected attributes (e.g., race, gender, age).
-- Group-specific performance metrics (MAE, RMSE, accuracy).
-- Built-in support for reweighing and bias-aware evaluations.
-
-### 3. Explainability
-- Global and local explainability using SHAP values.
-- Visual tools for feature importance, dependence, and individual explanations.
-
-### 4. Data and Target Leakage Detection
-- Identify potential data and target leakage using correlation and data trace heuristics.
-- Optional hooks for model training pipelines to validate leakage pre-deployment.
-
-### 5. Training–Serving Skew Analysis
-- Compare feature statistics and encoding mappings between training and production data pipelines.
-
-### 6. Schema & Consistency Validator
-- Automated schema diffing for features, data types, and missing value patterns.
-- Validates feature presence, value ranges, and type alignment.
-
-### 7. Outlier and Anomaly Detection
-- Unsupervised outlier scoring using Isolation Forests, LOF, or clustering-based anomaly detectors.
-- Pluggable into batch or real-time monitoring workflows.
+Think of it as a "pre-flight checklist" for your machine learning pipeline.
 
 ---
-
-## Installation
-
-To install the required packages:
-
-```bash
-# Create a virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows use: .\venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
 
 ## Project Structure
 
 ```
 model-audit-copilot/
-├── data/                   # Example datasets (UCI Adult, LendingClub, synthetic)
-├── notebooks/              # Prototyping, EDA, SHAP experiments
-├── copilot/                # Main Python package
-│   ├── drift/              # Drift detection module
-│   ├── fairness/           # Fairness audit module
-│   ├── explainability/     # Model explainability tools
-│   ├── leakage/            # Data/target leakage checks
-│   ├── outliers/           # Outlier detection methods
-│   ├── schema/             # Schema validation tools
-│   ├── skew/               # Train-serving skew detectors
-│   └── utils/              # Common utility functions
-├── dashboard/              # Streamlit frontend
-├── scripts/                # CLI examples and batch audit runners
-├── tests/                  # Unit tests (pytest)
-├── requirements.txt        # Project dependencies
-├── setup.py                # (optional) for packaging and distribution
-├── .gitignore
-└── README.md
+├── copilot/                 # All audit modules
+│   ├── drift/              # Drift detection (KS, PSI)
+│   ├── fairness/           # Fairness audits (group metrics)
+│   ├── leakage/            # Leakage checks (target, duplicates, ID)
+│   ├── schema/             # Schema/type mismatch checker
+│   ├── outliers/           # IsolationForest-based anomaly detector
+│   ├── explainability/     # SHAP summary + comparison
+│   └── auditor/            # Core orchestrator class
+├── dashboard/              # Streamlit frontend (multi-tab)
+│   └── main_app.py         # Dashboard entry point
+├── scripts/                # CLI and utility scripts
+│   ├── audit_runner.py     # One-off audit runner
+│   ├── batch_runner.py     # Multi-run audit manager
+│   ├── report_utils.py     # Markdown auto-report writer
+│   └── sql_loader.py       # Optional SQL-to-pandas loader
+├── tests/                  # Pytest tests (optional)
+├── data/                   # Local .csv and .db files (gitignored)
+├── reports/                # Output reports (gitignored)
+├── sample_data/            # Demo SHAP CSVs and sample inputs
+├── README.md               # You're here
+├── requirements.txt        # All dependencies
+└── setup.py                # Makes the project pip-installable
 ```
 
 ---
 
-## Usage
+## Features
 
-Each module can be run independently or integrated into a full audit pipeline. A typical drift check workflow:
+### Drift Detection
+- KS Test for numeric features
+- PSI for stability monitoring
+- Visual bar plot
 
+### Fairness Audits
+- MAE, RMSE, and Bias by group
+- Sensitive feature can be race, gender, etc.
+
+### Data Leakage Detection
+- Detects:
+  - Target-feature correlation
+  - Duplicate rows
+  - Train/test overlap
+  - ID-like columns
+
+### Schema Validation
+- Detects missing, extra, or mismatched feature types
+
+### SHAP Explainability
+- TreeExplainer-based
+- Global bar plot for feature importances
+
+### Model Comparison
+- Upload two SHAP CSVs
+- See feature-level SHAP delta
+- Visualized side-by-side
+
+### CLI + Batch Mode
+- Run audits from terminal
+- Output markdown reports
+- Batch multiple audits for versioning
+
+### SQL Integration
+- Read .db files via ipython-sql or sqlite3
+- Demo query notebook included
+
+---
+
+## Getting Started
+
+### Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Install as Editable Package (Optional)
+```bash
+pip install -e .
+```
+
+---
+
+## Streamlit App
+
+```bash
+streamlit run dashboard/main_app.py
+```
+
+Tabs:
+- Drift Detection
+- Fairness Audit
+- Outlier Detection
+- Leakage Detection
+- Schema Validation
+- Explainability
+- Model Comparison
+
+Uploads:
+- .csv files
+- .pkl or .joblib models
+- SHAP comparison .csvs
+
+---
+
+## CLI Usage
+
+### One-Off Audit
+```bash
+PYTHONPATH=. python scripts/audit_runner.py \
+  --reference data/ref_df.csv \
+  --current data/cur_df.csv \
+  --target true_cost \
+  --pred predicted_cost \
+  --group race \
+  --output reports/audit_report.md
+```
+
+### Batch Mode (Multiple Datasets)
+```bash
+PYTHONPATH=. python scripts/batch_runner.py \
+  --reference data/ref_df.csv \
+  --current data/cur_df.csv \
+  --target true_cost \
+  --pred predicted_cost \
+  --group race \
+  --tag 20240513
+```
+
+---
+
+## SQL Workflow (SQLite)
+
+1. Create database:
 ```python
-from copilot.drift import drift_detector
+import sqlite3
+import pandas as pd
 
-results = drift_detector.compare_datasets(
-    reference_df=train_data,
-    current_df=prod_data,
-    method='ks'
-)
-
-results.plot_summary()
+df = pd.read_csv("data/cur_df.csv")
+conn = sqlite3.connect("data/hospital_audit.db")
+df.to_sql("hospital_costs", conn, index=False, if_exists="replace")
+conn.close()
 ```
 
-The project also includes:
+2. Explore via notebook:
+```python
+%load_ext sql
+%sql sqlite:///data/hospital_audit.db
 
-- Prebuilt CLI tools for batch audits  
-- A Streamlit dashboard for visualizing drift, fairness, and model explanations  
-- Hooks for integrating with training pipelines or CI workflows  
+%%sql
+SELECT * FROM hospital_costs LIMIT 5;
+```
 
 ---
 
-## Tech Stack
+## Unit Tests (Optional)
+Run all tests:
+```bash
+pytest tests/
+```
 
-- Python 3.8+  
-- pandas, numpy, scikit-learn  
-- SHAP for explainability  
-- Streamlit for dashboard  
-- pytest for unit testing  
-- Optuna (optional) for hyperparameter sensitivity analysis  
-- GitHub Actions (CI testing)  
-- Docker (optional containerization)  
+---
+
+## Sample Audit Report Output
+See sample_data/example_audit_report.md
 
 ---
 
 ## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+MIT License — use freely with credit
 
 ---
 
 ## Author
+Created by Toby Liu
 
-Created and maintained by [Your Name], aspiring Machine Learning Engineer.  
-This project was developed as an industry-grade portfolio project to demonstrate applied ML engineering skills across modeling, infrastructure, and responsible AI tooling.
-
+If you use this project or learned from it, give it a star on GitHub!
