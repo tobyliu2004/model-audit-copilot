@@ -1,0 +1,33 @@
+# Core dependencies
+pandas>=1.5.0,<2.0.0
+numpy>=1.21.0,<2.0.0
+scikit-learn>=1.0.0,<2.0.0
+scipy>=1.7.0,<2.0.0
+
+# Visualization
+matplotlib>=3.4.0,<4.0.0
+seaborn>=0.11.0,<1.0.0
+
+# Model explainability
+shap>=0.41.0,<1.0.0
+
+# Web dashboard
+streamlit>=1.25.0,<2.0.0
+
+# Data handling
+openpyxl>=3.0.0,<4.0.0  # Excel support
+joblib>=1.2.0,<2.0.0     # Safe model serialization
+pyyaml>=6.0,<7.0         # Configuration files
+
+# Development dependencies (optional)
+pytest>=7.0.0,<8.0.0
+pytest-cov>=4.0.0,<5.0.0
+pytest-mock>=3.10.0,<4.0.0
+black>=23.0.0,<24.0.0
+flake8>=6.0.0,<7.0.0
+mypy>=1.0.0,<2.0.0
+isort>=5.12.0,<6.0.0
+
+# Documentation
+sphinx>=5.0.0,<6.0.0
+sphinx-rtd-theme>=1.2.0,<2.0.0

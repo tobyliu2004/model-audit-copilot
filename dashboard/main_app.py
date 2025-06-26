@@ -184,18 +184,31 @@ with tabs[5]:
     st.header("SHAP Explainability")
     st.write("Upload a trained model (.pkl) and its corresponding input dataset (.csv).")
 
-    model_file = st.file_uploader("Upload trained model (pickle)", type="pkl")
+    model_file = st.file_uploader("Upload trained model (.joblib)", type=["joblib", "pkl"], 
+                                 help="For security reasons, we recommend using .joblib format")
     data_file = st.file_uploader("Upload feature dataset (CSV)", type="csv", key="shap_data")
 
     if model_file and data_file:
         try:
-            import pickle
             import pandas as pd
             import shap
+            import tempfile
+            import os
+            from scripts.model_loader import load_model
 
-            # Load model and data
-            model = pickle.load(model_file)
-            df = pd.read_csv(data_file)
+            # Save uploaded file temporarily and load safely
+            with tempfile.NamedTemporaryFile(delete=False, suffix=model_file.name) as tmp_file:
+                tmp_file.write(model_file.read())
+                tmp_path = tmp_file.name
+            
+            try:
+                # Load model safely
+                model = load_model(tmp_path)
+                df = pd.read_csv(data_file)
+            finally:
+                # Clean up temporary file
+                if os.path.exists(tmp_path):
+                    os.unlink(tmp_path)
 
             # Drop non-feature columns if needed (user-controlled)
             drop_cols = st.multiselect("Columns to exclude from SHAP", df.columns)

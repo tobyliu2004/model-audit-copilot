@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  audit-dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./audit_config.yaml:/app/audit_config.yaml
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    command: streamlit run dashboard/main_app.py
+    
+  audit-cli:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./batch_reports:/app/batch_reports
+      - ./audit_config.yaml:/app/audit_config.yaml
+    environment:
+      - AUDIT_LOGGING_FILE=/app/reports/audit.log
+    command: python -m scripts.audit_runner --help
+    
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+      - ./reports:/app/reports
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''

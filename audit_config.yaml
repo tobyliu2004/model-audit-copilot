@@ -1,0 +1,51 @@
+# Model Audit Copilot Configuration
+
+drift:
+  ks_threshold: 0.05         # p-value threshold for KS test
+  psi_threshold: 0.2         # PSI threshold for drift detection
+  psi_buckets: 10           # Number of buckets for PSI calculation
+  min_samples_per_bucket: 5  # Minimum samples per bucket
+  methods:
+    - ks
+    - psi
+
+fairness:
+  min_group_size: 30        # Minimum samples per group for reliable metrics
+  bias_threshold: 0.1       # Threshold for bias detection
+  max_groups: 50           # Maximum number of groups to analyze
+  metrics:
+    - mae
+    - rmse
+    - bias
+
+outlier:
+  contamination: 0.01       # Expected proportion of outliers
+  n_estimators: 100        # Number of trees for Isolation Forest
+  max_samples: auto        # Number of samples to draw
+  random_state: 42         # Random seed for reproducibility
+
+leakage:
+  correlation_threshold: 0.95    # Threshold for target leakage
+  id_pattern_threshold: 0.95     # Threshold for ID-like columns
+  duplicate_threshold: 0         # Number of allowed duplicates
+  check_train_test_overlap: true # Check for train/test data overlap
+
+logging:
+  level: INFO              # Log level (DEBUG, INFO, WARNING, ERROR)
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: audit.log         # Log file path (null to disable)
+  console: true           # Enable console logging
+
+# General settings
+continue_on_error: false   # Continue if individual checks fail
+parallel_processing: true  # Enable parallel processing
+max_workers: 4            # Maximum parallel workers
+cache_enabled: true       # Enable result caching
+cache_dir: .audit_cache   # Cache directory
+
+# File handling
+max_file_size_mb: 1000    # Maximum file size in MB
+allowed_file_extensions:
+  - .csv
+  - .parquet
+  - .json
