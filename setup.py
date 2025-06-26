@@ -11,12 +11,12 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="model-audit-copilot",
     version="1.0.0",
-    author="Model Audit Copilot Contributors",
+    author="Toby Liu",
     author_email="",
     description="A comprehensive ML model auditing toolkit for detecting drift, fairness issues, and data quality problems",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/model-audit-copilot",
+    url="https://github.com/tobyliu2004/model-audit-copilot",
     packages=find_packages(exclude=["tests", "tests.*", "examples", "examples.*"]),
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -61,8 +61,8 @@ setup(
     include_package_data=True,
     keywords="machine-learning ml-ops model-monitoring drift-detection fairness-ai data-quality",
     project_urls={
-        "Bug Reports": "https://github.com/yourusername/model-audit-copilot/issues",
-        "Source": "https://github.com/yourusername/model-audit-copilot",
+        "Bug Reports": "https://github.com/tobyliu2004/model-audit-copilot/issues",
+        "Source": "https://github.com/tobyliu2004/model-audit-copilot",
         "Documentation": "https://model-audit-copilot.readthedocs.io",
     },
 )

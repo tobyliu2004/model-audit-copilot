@@ -2,8 +2,8 @@
 
 <div align="center">
 
-[![CI](https://github.com/yourusername/model-audit-copilot/workflows/CI/badge.svg)](https://github.com/yourusername/model-audit-copilot/actions)
-[![codecov](https://codecov.io/gh/yourusername/model-audit-copilot/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/model-audit-copilot)
+[![CI](https://github.com/tobyliu2004/model-audit-copilot/workflows/CI/badge.svg)](https://github.com/tobyliu2004/model-audit-copilot/actions)
+[![codecov](https://codecov.io/gh/tobyliu2004/model-audit-copilot/branch/main/graph/badge.svg)](https://codecov.io/gh/tobyliu2004/model-audit-copilot)
 [![PyPI version](https://badge.fury.io/py/model-audit-copilot.svg)](https://badge.fury.io/py/model-audit-copilot)
 [![Python Versions](https://img.shields.io/pypi/pyversions/model-audit-copilot.svg)](https://pypi.org/project/model-audit-copilot/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -39,7 +39,7 @@ pip install model-audit-copilot
 ### From source
 
 ```bash
-git clone https://github.com/yourusername/model-audit-copilot.git
+git clone https://github.com/tobyliu2004/model-audit-copilot.git
 cd model-audit-copilot
 pip install -e .
 ```
@@ -47,7 +47,7 @@ pip install -e .
 ### Using Docker
 
 ```bash
-docker pull yourusername/model-audit-copilot:latest
+docker pull tobyliu2004/model-audit-copilot:latest
 ```
 
 ## 🎯 Quick Start
@@ -246,7 +246,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ```bash
 # Fork and clone the repository
-git clone https://github.com/yourusername/model-audit-copilot.git
+git clone https://github.com/tobyliu2004/model-audit-copilot.git
 
 # Create a feature branch
 git checkout -b feature/your-feature
@@ -275,7 +275,7 @@ This toolkit prioritizes security:
 - Path validation to prevent traversal attacks
 - Input validation on all user data
 
-Report security issues to: security@yourproject.com
+Report security issues via GitHub Issues with the "security" label.
 
 ## 📄 License
 
@@ -299,5 +299,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-Made with ❤️ by the Model Audit Copilot Team
+Model Audit Copilot - ML Model Auditing Made Easy
 </div>

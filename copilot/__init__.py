@@ -1,7 +1,7 @@
 """Model Audit Copilot - A comprehensive ML model auditing toolkit."""
 
 __version__ = "1.0.0"
-__author__ = "Model Audit Copilot Contributors"
+__author__ = "Toby Liu"
 
 from copilot.auditor.audit_orchestrator import AuditOrchestrator
 from copilot.drift.drift_detector import DriftReport, compare_datasets

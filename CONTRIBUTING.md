@@ -14,7 +14,7 @@ By participating in this project, you agree to abide by our Code of Conduct:
 
 ### Reporting Issues
 
-1. Check if the issue already exists in the [issue tracker](https://github.com/yourusername/model-audit-copilot/issues)
+1. Check if the issue already exists in the [issue tracker](https://github.com/tobyliu2004/model-audit-copilot/issues)
 2. If not, create a new issue with:
    - Clear, descriptive title
    - Detailed description of the problem
@@ -37,7 +37,7 @@ By participating in this project, you agree to abide by our Code of Conduct:
 
 ```bash
 # Fork and clone the repository
-git clone https://github.com/yourusername/model-audit-copilot.git
+git clone https://github.com/tobyliu2004/model-audit-copilot.git
 cd model-audit-copilot
 
 # Create a virtual environment
@@ -240,7 +240,7 @@ timeit.timeit('your_function()', number=1000)
 ## Questions?
 
 - Check the [FAQ](docs/FAQ.md)
-- Ask in [discussions](https://github.com/yourusername/model-audit-copilot/discussions)
+- Ask in [discussions](https://github.com/tobyliu2004/model-audit-copilot/discussions)
 - Contact maintainers
 
 Thank you for contributing to Model Audit Copilot! 🎉
