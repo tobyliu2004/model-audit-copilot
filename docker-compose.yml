@@ -33,4 +33,6 @@ services:
       - ./notebooks:/app/notebooks
       - ./data:/app/data
       - ./reports:/app/reports
-    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    environment:
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN:-model_audit_token}
+    command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root

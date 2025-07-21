@@ -12,7 +12,7 @@ setup(
     name="model-audit-copilot",
     version="1.0.0",
     author="Toby Liu",
-    author_email="",
+    author_email="tobyliu.sw@outlook.com",
     description="A comprehensive ML model auditing toolkit for detecting drift, fairness issues, and data quality problems",
     long_description=long_description,
     long_description_content_type="text/markdown",
