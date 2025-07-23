@@ -68,10 +68,10 @@ jobs:
       run: isort --check-only copilot/ scripts/ tests/
     
     - name: Run Flake8
-      run: flake8 copilot/ scripts/ tests/ --max-line-length=100 --extend-ignore=E203,W503
+      run: flake8 copilot/ scripts/ tests/
     
     - name: Run MyPy
-      run: mypy copilot/ --ignore-missing-imports
+      run: mypy copilot/
 
   security:
     runs-on: ubuntu-latest

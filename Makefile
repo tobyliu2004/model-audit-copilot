@@ -31,8 +31,8 @@ test-cov:
 	pytest tests/ -v --cov=copilot --cov-report=html --cov-report=term
 
 lint:
-	flake8 copilot/ scripts/ tests/ --max-line-length=100 --extend-ignore=E203,W503
-	mypy copilot/ --ignore-missing-imports
+	flake8 copilot/ scripts/ tests/
+	mypy copilot/
 	black --check copilot/ scripts/ tests/
 	isort --check-only copilot/ scripts/ tests/
 

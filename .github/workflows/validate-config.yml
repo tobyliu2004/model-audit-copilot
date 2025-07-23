@@ -1,0 +1,51 @@
+name: Validate Configuration
+
+on:
+  push:
+    paths:
+      - 'pyproject.toml'
+      - '.flake8'
+      - '.pre-commit-config.yaml'
+      - 'setup.py'
+      - 'requirements.txt'
+  pull_request:
+    paths:
+      - 'pyproject.toml'
+      - '.flake8'
+      - '.pre-commit-config.yaml'
+      - 'setup.py'
+      - 'requirements.txt'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Validate pyproject.toml
+      run: |
+        pip install toml
+        python -c "import toml; toml.load('pyproject.toml')"
+    
+    - name: Validate YAML files
+      run: |
+        pip install pyyaml
+        python -c "import yaml; yaml.safe_load(open('.pre-commit-config.yaml'))"
+    
+    - name: Check flake8 config
+      run: |
+        pip install flake8
+        flake8 --version
+        flake8 --list-extensions
+    
+    - name: Test pre-commit config
+      run: |
+        pip install pre-commit
+        pre-commit validate-config
+        pre-commit validate-manifest
