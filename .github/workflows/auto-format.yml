@@ -1,0 +1,51 @@
+name: Auto Format Python Code
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.head_ref }}
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Install formatting tools
+      run: |
+        pip install black isort
+        
+    - name: Run Black formatter
+      run: |
+        black copilot/ scripts/ tests/ --config pyproject.toml
+        
+    - name: Run isort
+      run: |
+        isort copilot/ scripts/ tests/ --settings-path pyproject.toml
+        
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        git diff --name-only --exit-code || echo "changed=true" >> $GITHUB_OUTPUT
+        
+    - name: Commit changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git commit -m "Auto-format Python code with Black and isort"
+        git push
